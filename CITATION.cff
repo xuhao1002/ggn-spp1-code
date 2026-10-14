@@ -10,6 +10,11 @@ license: MIT
 version: 1.0.0
 date-released: "2026-10-14"
 repository-code: "https://github.com/xuhao1002/ggn-spp1-code"
+doi: "10.5281/zenodo.23359094"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23359094"
+    description: "Concept DOI — always resolves to the latest archived version."
 keywords:
   - lung adenocarcinoma
   - precursor lesions
