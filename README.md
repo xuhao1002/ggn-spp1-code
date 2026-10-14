@@ -71,7 +71,7 @@ Python 3.11; scanpy 1.11.5, anndata 0.12.19, harmonypy 2.1.0, pydeseq2 0.5.4, st
 
 If you use this code, please cite both the archived release and the paper. `CITATION.cff` holds the metadata in machine-readable form; the journal reference and its DOI are added there on acceptance.
 
-Xu H., Zhang H., Zhang L. *Analysis code for: A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma*, version 1.0.0 (2026). The Second Affiliated Hospital of Harbin Medical University, Harbin, China. https://github.com/xuhao1002/ggn-spp1-code. Archived at Zenodo: https://doi.org/10.5281/zenodo.23359094 (this DOI always resolves to the latest archived version).
+Xu H., Zhang H., Zhang L. *Analysis code for: A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma*, version 1.0.1 (2026). The Second Affiliated Hospital of Harbin Medical University, Harbin, China. https://github.com/xuhao1002/ggn-spp1-code. Archived at Zenodo: https://doi.org/10.5281/zenodo.23359094 (this DOI always resolves to the latest archived version).
 
 ## Licence
 

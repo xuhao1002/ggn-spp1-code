@@ -7,7 +7,7 @@ abstract: >-
   lung adenocarcinoma. No new data were generated.
 type: software
 license: MIT
-version: 1.0.0
+version: 1.0.1
 date-released: "2026-10-14"
 repository-code: "https://github.com/xuhao1002/ggn-spp1-code"
 doi: "10.5281/zenodo.23359094"
