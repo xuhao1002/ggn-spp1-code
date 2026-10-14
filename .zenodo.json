@@ -1,0 +1,31 @@
+{
+  "title": "Analysis code for: A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma",
+  "description": "<p>Analysis scripts, pre-specified and hash-locked analysis plans, and figure source data for a public-data study of the precursor-to-invasive transition in lung adenocarcinoma. No new data were generated; all datasets analysed are public and are listed in the paper's Data availability statement.</p><p>Code (scripts/, figures/) is released under the MIT License; text and data (plans/, other_documents/, source_data/, README.md, CHECKSUMS.tsv) under CC BY 4.0.</p>",
+  "upload_type": "software",
+  "license": "mit",
+  "version": "1.0.0",
+  "language": "eng",
+  "keywords": [
+    "lung adenocarcinoma",
+    "precursor lesions",
+    "SPP1",
+    "tumour-associated macrophages",
+    "hypoxia",
+    "spatial transcriptomics",
+    "reproducibility"
+  ],
+  "creators": [
+    {
+      "name": "Xu, Hao",
+      "affiliation": "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+    },
+    {
+      "name": "Zhang, Han",
+      "affiliation": "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+    },
+    {
+      "name": "Zhang, Linyou",
+      "affiliation": "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+    }
+  ]
+}

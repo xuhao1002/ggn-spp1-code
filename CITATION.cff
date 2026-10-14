@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper."
+title: "Analysis code for: A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma"
+abstract: >-
+  Analysis scripts, pre-specified and hash-locked analysis plans, and figure
+  source data for a public-data study of the precursor-to-invasive transition in
+  lung adenocarcinoma. No new data were generated.
+type: software
+license: MIT
+version: 1.0.0
+date-released: "2026-10-14"
+repository-code: "https://github.com/xuhao1002/ggn-spp1-code"
+keywords:
+  - lung adenocarcinoma
+  - precursor lesions
+  - SPP1
+  - tumour-associated macrophages
+  - hypoxia
+  - spatial transcriptomics
+  - reproducibility
+authors:
+  # Author order follows the manuscript. ORCID lines are omitted rather than
+  # left as placeholders, because a placeholder fails CFF validation; add
+  # `orcid: "https://orcid.org/0000-0000-0000-0000"` under an author once the
+  # real identifier is available.
+  - family-names: "Xu"
+    given-names: "Hao"
+    affiliation: "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+  - family-names: "Zhang"
+    given-names: "Han"
+    affiliation: "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+  - family-names: "Zhang"
+    given-names: "Linyou"
+    affiliation: "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
+preferred-citation:
+  type: article
+  title: "A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma"
+  journal: "npj Precision Oncology"
+  year: 2026
+  authors:
+    - family-names: "Xu"
+      given-names: "Hao"
+    - family-names: "Zhang"
+      given-names: "Han"
+    - family-names: "Zhang"
+      given-names: "Linyou"
+  # doi: 10.1038/<to be completed on acceptance>
