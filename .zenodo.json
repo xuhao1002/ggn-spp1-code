@@ -3,7 +3,7 @@
   "description": "<p>Analysis scripts, pre-specified and hash-locked analysis plans, and figure source data for a public-data study of the precursor-to-invasive transition in lung adenocarcinoma. No new data were generated; all datasets analysed are public and are listed in the paper's Data availability statement.</p><p>Code (scripts/, figures/) is released under the MIT License; text and data (plans/, other_documents/, source_data/, README.md, CHECKSUMS.tsv) under CC BY 4.0.</p>",
   "upload_type": "software",
   "license": "mit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "language": "eng",
   "keywords": [
     "lung adenocarcinoma",
