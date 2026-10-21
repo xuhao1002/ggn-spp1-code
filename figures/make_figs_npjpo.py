@@ -84,7 +84,7 @@ for i,(n,k) in enumerate(rows):
     ax.plot([v["ci95"][0]*100,v["ci95"][1]*100],[y,y],color=c,lw=1.6,solid_capstyle="round"); ax.scatter(v["mean_diff"]*100,y,s=18,color=c,zorder=3)
     if "IL1B" in k: ax.scatter(v["upper95_one_sided"]*100,y,marker="|",s=60,color=INK,zorder=4)
 ax.axvline(0,color=MUT,lw=0.6,ls=(0,(2,2))); ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows][::-1]); ax.set_xlabel("Change vs paired normal (pp, 95% CI)\n| = one-sided 95% upper bound")
-ax.set_title("Effect sizes by stage",loc="left"); lab(ax,"D",dx=-0.55)
+ax.set_title("Effect sizes by stage",loc="left"); lab(ax,"C",dx=-0.55)
 claims=["KAC expansion","CAS expansion","CD47 ↑ (AT2 lineage)","IL-1β+ macrophage ↑","IL1R1 ↑ (epithelium)","HAVCR2/TIM-3 ↑","CEACAM1 ↑ (ligand)"]
 cols=["Peng\nsnRNA","GSE\n164789","Bulk\ncohorts","Peng\nVisium"]
 G=[[1,0,1,9],[1,0,1,9],[1,9,2,9],[0,0,0,0],[0,0,0,9],[0,0,0,9],[1,1,1,9]]
@@ -194,39 +194,49 @@ paired(axs[5],w2.Precursor,w2.LUAD,PRE,INV,["Precursor","Invasive"],"Macrophage 
 save(fig,"Figure5")
 
 # ---------------- Figure 6: outcome and limits ----------------
+# Panel a (revised after peer review): cohort estimates grouped by endpoint. Pooling within the RFS/DFS group is post hoc
+# (A6, results/review_A6/run_20261021_100210/A6_pooled.tsv); no pooled estimate is drawn for the 2 OS cohorts. The pre-specified
+# cross-endpoint estimate and the sensitivity analyses formerly in panel b are reported in Table S6b.
 pc=pd.read_csv(P("30_spatial/clinical/per_cohort.tsv", R),sep="\t"); pc=pc[pc.model=="main"]
-A=json.load(open(P("sens_protein/A_niche_sensitivity.json", R))); Rr=json.load(open(P("sens_protein/R_prognosis_robustness.json", R))); T=json.load(open(P("sens_protein/T_hypoxia.json", R)))
+pool=pd.read_csv(P("review_A6/run_20261021_100210/A6_pooled.tsv", R),sep="\t").set_index("model"); rd=pool.loc["endpoint_RFS_DFS"]
 mr=pd.read_csv(P("50_genetics/macrophage_SPP1/mr_coloc_results.tsv", R),sep="\t").iloc[0]
 g=pd.read_csv(P("safety_druggability/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct.gz", RAW),sep="\t",skiprows=2); sp1=g[g.Description=="SPP1"].iloc[0,2:].astype(float)
-fig=plt.figure(figsize=(W,5.4)); gs=fig.add_gridspec(2,2,width_ratios=[1,1],height_ratios=[1.25,1],wspace=0.75,hspace=0.6)
-ax=fig.add_subplot(gs[0,0]); main=Rr["main"]
-rows=[(f"{r.cohort} ({r.endpoint}, n={r.n})",r.HR,r.lo,r.hi,INV) for r in pc.itertuples()]
-for i,(n,h,l,u,c) in enumerate(rows):
-    y=len(rows)+1-i; ax.plot([l,u],[y,y],color=c,lw=1.3); ax.scatter(h,y,s=16,color=c,marker="s",zorder=3)
-y=0.7; ax.add_patch(plt.Polygon([[main["lo"],y],[main["HR"],y+0.38],[main["hi"],y],[main["HR"],y-0.38]],color=INK))
-ax.plot(main["PI95"],[y-0.9,y-0.9],color=MUT,lw=1); ax.set_ylim(-0.6,len(rows)+1.6)
-ax.set_xscale("log"); ax.axvline(1,color=MUT,lw=0.6,ls=(0,(2,2)))
-ax.set_yticks([len(rows)+1-i for i in range(len(rows))]+[y,y-0.9]); ax.set_yticklabels([r[0] for r in rows]+[f"Random effects  {main['HR']:.2f} ({main['lo']:.2f}–{main['hi']:.2f})","95% prediction interval"])
-ax.get_yticklabels()[-2].set_fontweight("bold"); ax.get_yticklabels()[-1].set_color(MUT)
-ax.set_xticks([0.25,0.5,1,2,4]); ax.set_xticklabels(["0.25","0.5","1","2","4"]); ax.xaxis.set_minor_formatter(mpl.ticker.NullFormatter()); ax.set_xlabel("HR per SD of niche score (95% CI)")
-ax.set_title("Stage I outcome (RFS, DFS or OS)",loc="left"); ptxt(ax,f"Two-sided P = {main['p_two_sided']:.3f}; I² = {main["I2"]:.2f}",y=-0.25); lab(ax,"A",dx=-1.05,dy=1.02)
-ax=fig.add_subplot(gs[0,1]); loo=[v["HR"] for v in A["A1_leave_one_out"].values()]
-mods=[("Main model",main),("+ purity proxy",Rr["R1_purity"]),("+ CAF score",A["A2_plus_CAF"]),("Myeloid-source genes only",A["A3_myeloid_source_genes_only"]),("+ hypoxia (HALLMARK)",T["T3_main_plus_HALLMARK"]),("+ hypoxia (HIF13)",Rr["R2_hypoxia"]),("Fully adjusted",Rr["R3_all"])]
-for i,(n,v) in enumerate(mods):
-    y=len(mods)-i; c=INK if v["lo"]>1 else NO; ax.plot([v["lo"],v["hi"]],[y,y],color=c,lw=1.3); ax.scatter(v["HR"],y,s=16,color=c,zorder=3)
-ax.plot([min(loo),max(loo)],[0,0],color=INV,lw=4,alpha=0.5,solid_capstyle="round")
-ax.set_yticks(list(range(len(mods),0,-1))+[0]); ax.set_yticklabels([m[0] for m in mods]+["Leave-one-cohort-out range"]); ax.set_xscale("log"); ax.axvline(1,color=MUT,lw=0.6,ls=(0,(2,2)))
-ax.set_xlim(0.8,2.8); ax.set_xticks([0.8,1,1.5,2,2.5]); ax.set_xticklabels(["0.8","1","1.5","2","2.5"]); ax.xaxis.set_minor_formatter(mpl.ticker.NullFormatter()); ax.set_ylim(-0.7,len(mods)+0.7)
-ax.set_xlabel("Pooled HR per SD (95% CI)"); ax.set_title("Robustness of the association",loc="left"); ptxt(ax,"grey: 95% CI includes 1",y=-0.25); lab(ax,"B",dx=-0.72,dy=1.02)
+fig=plt.figure(figsize=(W,5.6)); gs=fig.add_gridspec(2,2,width_ratios=[1,1],height_ratios=[1.15,1],wspace=0.75,hspace=0.55)
+ax=fig.add_subplot(gs[0,:]); rel=pc[pc.endpoint.isin(["RFS","DFS"])]; osr=pc[pc.endpoint=="OS"]
+assert len(rel)==5 and len(osr)==2 and int(rd.k)==5
+yt,yl,yc=[],[],[]
+def crow(r,y,c):
+    ax.plot([r.lo,r.hi],[y,y],color=c,lw=1.3); ax.scatter(r.HR,y,s=16,color=c,marker="s",zorder=3)
+    ax.text(1.01,y,f"{r.HR:.2f} ({r.lo:.2f}–{r.hi:.2f})",transform=ax.get_yaxis_transform(),va="center",fontsize=6.3)
+    yt.append(y); yl.append(f"{r.cohort} ({r.endpoint}, n={r.n})"); yc.append(INK)
+y=10.6; ax.text(0.0,y,"Relapse-free or disease-free survival",transform=ax.get_yaxis_transform(),ha="right",va="center",fontsize=6.8,fontweight="bold")
+for i,r in enumerate(rel.itertuples()): crow(r,9.6-i,INV)
+y=4.3; ax.add_patch(plt.Polygon([[rd.HK_lo,y],[rd.HR,y+0.36],[rd.HK_hi,y],[rd.HR,y-0.36]],color=INK))
+ax.plot([rd.lo,rd.hi],[y-0.75,y-0.75],color=INK,lw=0.8)
+ax.text(1.01,y,f"{rd.HR:.2f} (HK {rd.HK_lo:.2f}–{rd.HK_hi:.2f})",transform=ax.get_yaxis_transform(),va="center",fontsize=6.3,fontweight="bold")
+ax.text(1.01,y-0.75,f"DL 95% CI {rd.lo:.2f}–{rd.hi:.2f}",transform=ax.get_yaxis_transform(),va="center",fontsize=6.3,color=MUT)
+yt+= [y,y-0.75]; yl+=[f"Random effects, post hoc (I² = {rd.I2:.2f})","DerSimonian–Laird 95% CI"]; yc+=[INK,MUT]
+y=2.4; ax.text(0.0,y,"Overall survival",transform=ax.get_yaxis_transform(),ha="right",va="center",fontsize=6.8,fontweight="bold")
+for i,r in enumerate(osr.itertuples()): crow(r,1.4-i,INV)
+ax.set_yticks(yt); ax.set_yticklabels(yl)
+for t,c in zip(ax.get_yticklabels(),yc): t.set_color(c)
+ax.get_yticklabels()[5].set_fontweight("bold")
+ax.set_xscale("log"); ax.axvline(1,color=MUT,lw=0.6,ls=(0,(2,2))); ax.set_xlim(0.2,5.2); ax.set_ylim(-0.2,11.2)
+ax.set_xticks([0.25,0.5,1,2,4]); ax.set_xticklabels(["0.25","0.5","1","2","4"]); ax.xaxis.set_minor_formatter(mpl.ticker.NullFormatter())
+ax.set_xlabel("HR per SD of state score (95% CI)"); ax.tick_params(axis="y",length=0)
+ax.text(1.01,11.2,"HR (95% CI)",transform=ax.get_yaxis_transform(),va="center",fontsize=6.3,color=MUT)
+ax.set_title("Stage I outcome by endpoint",loc="left",pad=10)
+ax.text(1.01,2.4,"no pooled estimate (k = 2)",transform=ax.get_yaxis_transform(),va="center",fontsize=6.3,color=MUT)
+lab(ax,"A",dx=-0.42,dy=1.02)
 ax=fig.add_subplot(gs[1,0]); pps=[mr[f"PP.H{i}"] for i in range(5)]
 ax.bar(range(5),pps,color=[NO,INV,NO,NO,"#6250d6"],width=0.65)
 for i,p in enumerate(pps): ax.text(i,p+0.02,f"{p:.2f}",ha="center",fontsize=6,color=MUT)
 ax.set_xticks(range(5)); ax.set_xticklabels(["H0","H1\neQTL only","H2","H3","H4\nshared"]); ax.set_ylim(0,1.05); ax.set_ylabel("Posterior probability")
-ax.set_title("SPP1 macrophage eQTL × LUAD GWAS",loc="left"); ax.text(0.97,0.95,f"Wald-ratio MR\nOR {mr.wald_OR:.2f} ({mr.wald_OR_lo:.2f}–{mr.wald_OR_hi:.2f})",transform=ax.transAxes,ha="right",va="top",fontsize=6.3,color=MUT); lab(ax,"C",dx=-0.25)
+ax.set_title("SPP1 macrophage eQTL × LUAD GWAS",loc="left"); ax.text(0.97,0.95,f"Wald-ratio MR\nOR {mr.wald_OR:.2f} ({mr.wald_OR_lo:.2f}–{mr.wald_OR_hi:.2f})",transform=ax.transAxes,ha="right",va="top",fontsize=6.3,color=MUT); lab(ax,"B",dx=-0.25)
 ax=fig.add_subplot(gs[1,1]); top=sp1.sort_values(ascending=False); sel=list(top.index[:6])+["Lung","Whole Blood"]; sel=list(dict.fromkeys(sel))
 vals=sp1[sel]; cols=[INV if "Kidney" in t else (PRE if t=="Lung" else NO) for t in sel]
 short=lambda t: t.replace("Brain - Spinal cord (cervical c-1)","Spinal cord").replace(" - "," – ")
 ax.barh(range(len(sel))[::-1],vals,color=cols,height=0.7); ax.set_yticks(range(len(sel))[::-1]); ax.set_yticklabels([short(t) for t in sel],fontsize=6.3); ax.set_xscale("log"); ax.xaxis.set_minor_formatter(mpl.ticker.NullFormatter()); ax.set_xlabel("SPP1 median TPM (GTEx v8)")
-ax.set_title("SPP1 in normal tissues",loc="left"); lab(ax,"D",dx=-0.55)
+ax.set_title("SPP1 in normal tissues",loc="left"); lab(ax,"C",dx=-0.55)
 save(fig,"Figure6")
 print("ok")

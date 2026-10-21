@@ -1,14 +1,14 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite both the software and the paper."
-title: "Analysis code for: A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma"
+title: "Analysis code for: A hypoxia-associated SPP1+ macrophage state distinguishes paired precursor and invasive lung adenocarcinoma lesions"
 abstract: >-
   Analysis scripts, pre-specified and hash-locked analysis plans, and figure
   source data for a public-data study of the precursor-to-invasive transition in
   lung adenocarcinoma. No new data were generated.
 type: software
 license: MIT
-version: 1.0.1
-date-released: "2026-10-14"
+version: 1.1.0
+date-released: "2026-10-21"
 repository-code: "https://github.com/xuhao1002/ggn-spp1-code"
 doi: "10.5281/zenodo.23359094"
 identifiers:
@@ -39,7 +39,7 @@ authors:
     affiliation: "The Second Affiliated Hospital of Harbin Medical University, Harbin, China"
 preferred-citation:
   type: article
-  title: "A hypoxia-associated SPP1+ macrophage state marks the transition from precursor lesions to invasive lung adenocarcinoma"
+  title: "A hypoxia-associated SPP1+ macrophage state distinguishes paired precursor and invasive lung adenocarcinoma lesions"
   journal: "npj Precision Oncology"
   year: 2026
   authors:
