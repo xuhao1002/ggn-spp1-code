@@ -4,7 +4,7 @@ The first analysis stage of this study — nuclei quality control and annotation
 
 ## What the standards required
 
-The comparison that nominated SPP1 was a paired pseudobulk comparison of invasive with precursor lesions within each cell population (pydeseq2, ~ patient + lesion type, FDR < 0.05, at least 50 cells per side), followed by source and ambient-RNA filters, with external replication counted when a gene reached one-sided BH q < 0.05 in the same direction in at least one of the two validation cohorts (GSE164789, GSE189357). SPP1 met this rule in both cohorts (`scripts/14_microenv_layer1.py`; `results/14_microenv/`). Every later test of SPP1 reported in the paper was conducted under a hash-locked plan (see `plans/INDEX.md` and `ANALYSES.md`).
+The comparison that nominated SPP1 was a paired pseudobulk comparison of invasive with precursor lesions within each cell population (pydeseq2, ~ patient + lesion type, FDR < 0.05, at least 50 cells per side), followed by source and ambient-RNA filters, with external replication counted when a gene reached one-sided BH q < 0.05 in the same direction in at least one of the two validation cohorts (GSE164789, GSE189357). SPP1 met this rule in both cohorts and had the largest discovery-cohort increase among myeloid genes that met it (COMP had a larger increase but did not replicate) (`scripts/14_microenv_layer1.py`; `results/14_microenv/`). Every later test of SPP1 reported in the paper was conducted under a hash-locked plan (see `plans/INDEX.md` and `ANALYSES.md`).
 
 ## Files in `stage1_standards/`
 

@@ -4,7 +4,7 @@ Every analysis reported in the paper or its Supplementary Information, mapped to
 
 ## Stage 1: nomination (standards written in the project log, not hash-locked)
 
-The first stage nominated the candidates that later stages tested. Its standards were recorded in the project log as written and dated (8 October 2026) before the analyses were run, but were not kept as hash-locked files; the order in time rests on the log alone (see `README_stage1_standards.md` and `stage1_standards/`). SPP1 was nominated here, as the myeloid gene with the largest paired increase, and its replication in the two single-cell cohorts was governed by the same standards (one-sided BH q < 0.05 in the same direction in at least one cohort).
+The first stage nominated the candidates that later stages tested. Its standards were recorded in the project log as written and dated (8 October 2026) before the analyses were run, but were not kept as hash-locked files; the order in time rests on the log alone (see `README_stage1_standards.md` and `stage1_standards/`). SPP1 was nominated here, as the largest myeloid increase among genes meeting the stage-1 replication rule (COMP had a larger increase in the discovery cohort but did not replicate), and its replication in the two single-cell cohorts was governed by the same standards (one-sided BH q < 0.05 in the same direction in at least one cohort).
 
 | Analysis | Scripts | Governing text |
 |---|---|---|
@@ -13,7 +13,7 @@ The first stage nominated the candidates that later stages tested. Its standards
 | External validation cohorts: preparation and epithelial validation | `05_prepare_validation.py`, `05b_apply_overrides.py`, `06_external_validation.py` | research design document (layer-1 rule) |
 | Epithelial candidate layers 3–5 and integration | `07_candidates.py`, `08_layer3_depmap.py`, `09_layer4_clinical.py`, `10_layer5_safety_druggable.py` (`_v1` kept), `11_integrate.py`, `12_layer3_lincs.py`, `13_indirect_path.py` (`_v1` identical) | log: layer 3–5 and supplementary-analysis standards |
 | Microenvironment comparisons incl. myeloid SPP1, with external replication | `14_microenv_layer1.py`, `15_microenv_layers45.py` (`_v1` kept), `17_ligand_receptor.py` | log: supplementary-analysis standards |
-| Proliferation-adjusted Cox (exploratory; labelled post hoc in Table S1) | `16_prolif_adjusted_cox.py` | log: supplementary-analysis standards |
+| Proliferation-adjusted Cox (exploratory; specified in the stage-1 standards after the unadjusted results had been seen) | `16_prolif_adjusted_cox.py` | log: supplementary-analysis standards |
 | Stage sensitivity (17 pairs) | `18_sensitivity_stageI.py` | log: sensitivity analysis entry |
 
 ## Stage 2 onward: hash-locked plans
@@ -23,12 +23,12 @@ The plan file named in each script's header, as found in the released scripts. S
 | Table S1 plan | Scripts |
 |---|---|
 | Part 2: precursor-stage target screen | `21_stage2_discovery.py`†, `22_stage2_validation_layers.py`† |
-| Part 3: spatial analysis | `70_build_spatial_reference.py`, `71_fit_reference_model.py`†, `90_merged_reference.py`†, `91_identifiability_sim.py`†, `92_c2l_map.py`†, `93_epoch_check.py`†, `96_spp1_niche_prognosis.py`† (state-score prognosis); helper `c2l_common.py` |
+| Part 3: spatial analysis | `70_build_spatial_reference.py`†, `71_fit_reference_model.py`†, `90_merged_reference.py`†, `91_identifiability_sim.py`†, `92_c2l_map.py`†, `93_epoch_check.py`†, `96_spp1_niche_prognosis.py`† (state-score prognosis); helper `c2l_common.py` |
 | Part 4: normal→precursor drivers | `40_step0_KAC_counts.py`†, `40_stepwise_tests.py`†, `41_state_matched_KAC.py`†, `43_hypothesis_TIM3.py`† |
-| KAC fraction, cross-cohort pooling | `60_kac_pooled.py` |
+| KAC fraction, cross-cohort pooling | `60_kac_pooled.py`† |
 | Part 5: human genetics | `95_mr_coloc.py`, `97_mr_spp1_macrophage.py` |
-| Spatial gene-level exploratory | `80_spatial_gene_exploratory.py` |
-| SPP1 source diagnostic | `81_spp1_source_diagnostic.py` |
+| Spatial gene-level exploratory (E1–E3; exploratory by design) | `80_spatial_gene_exploratory.py`† |
+| SPP1 source diagnostic | `81_spp1_source_diagnostic.py`† |
 | Sensitivity and protein validation | `98_niche_sensitivity.py`, `99_il1b_power.py`, `100_cptac_spp1.py` |
 | Xenium independent validation | `101_xenium_validation.py` |
 | Prognosis robustness and Xenium spillover | `102_prognosis_robustness.py`, `103_xenium_spillover.py` |
@@ -60,11 +60,14 @@ Scripts in `scripts/review_A/`; all share `_common.py`, which verifies the plan 
 | D6 (post hoc) | deviation record D6 | `D6_discovery_depth_matching.py` | `review_D6/run_20261021_141856/` | Table S15c |
 | D7 (post hoc) | deviation record D7 | `D7_external_HIF1A_depth.py` | `review_D7/run_20261021_142723/` | Table S15d |
 | P1, D3 | deviation record | — (process records for A1) | `review_A1_run1_old_script_2026-10-19_2342/` | Table S1 note |
+| Hypoxia gene-set source composition (post hoc) | Table S1 note | `hypoxia_geneset_composition.py` ‡ | `review_hypoxia_composition/run_20261021_141900/` | Results |
+| Xenium source table for Table S3 / Figure 4e | — (derivation) | `xenium_source_fixed_from_A3.py` ‡ | `review_xenium_source_fixed/run_20261021_141900/` | Table S3; Figure 4e (`source_data/xenium__xenium_source_fixed.tsv`) |
 
 Notes:
 
+- ‡ `hypoxia_geneset_composition.py` and `xenium_source_fixed_from_A3.py` were recreated on 21 October 2026, after the independent review found no script for them; the original computations were interactive and their scripts were not preserved. The first reproduces the logged composition (epithelium 30% and 26%, myeloid 20% and 15%) with an assertion; the second derives the released Xenium source table from the A3 base-rule output and asserts agreement (maximum difference 4.5 × 10⁻⁸).
 - ‡ `D1_hallmark_source_check.py` was recreated on 21 October 2026 from the original interactive comparison, which was run in a cloud container and whose script was not preserved; the recreated script reads the archived official gene-set file (checksum asserted) and gives an identical result. A first copy without the overlap-gene assertion was also run (`review_D1/run_20261021_065303/`, same result; script in `_archive/`).
-- Run directory names written on the Linux virtual machine (`review_A2b`, `review_D1`) use UTC; all others use China Standard Time.
+- Run directory names written on the Linux virtual machine (`review_A2b`, `review_D1`, `review_hypoxia_composition`, `review_xenium_source_fixed`) use UTC; all others use China Standard Time.
 - Failed runs are kept as produced and are not listed above: `review_A5/run_20261021_140205/` (stopped before the summary step by a key-type error), `review_D6/run_20261021_141318/` (stopped before loading data by a NameError). The superseded scripts are in `scripts/review_A/_archive/`, and each failed run's `RUN_INFO.txt` names the cause.
 - `review_A3_cloudrun_2026-10-19/` is an earlier execution of the same A3 script in a cloud environment; it agrees with `review_A3/` to floating-point precision.
 - The review scripts locate the project with the fixed path `~/全部数据库/GGN_target` defined in `_common.py`, as when they were run; to rerun them elsewhere, edit `P` in `_common.py` (and `P` in `A6_cox_diagnostics.R`).

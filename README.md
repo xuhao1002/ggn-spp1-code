@@ -43,7 +43,7 @@ From a clone, with nothing configured:
 cd figures && python3 make_figs_npjpo.py
 ```
 
-This regenerates Figures 1, 2, 3, 5 and 6, and panels a and e of Figure 4, from the released source data alone. Supplementary Figure S1 is drawn by `scripts/review_A/A2b_unit_scatter.py` from the A2 unit tables (released in `source_data/`). Panels b, c and d of Figure 4 read the CPTAC-LUAD proteome tables, which are not redistributed here (see below); download them from the Proteomic Data Commons and point `SPP1_RAW` at the directory holding them, after which all six figures are reproduced:
+This regenerates Figures 1, 2, 3, 5 and 6, and panels a and e of Figure 4, from the released source data alone. Supplementary Figure S1 is drawn by `scripts/review_A/A2b_unit_scatter.py` from the A2 unit tables (released in `source_data/`). The Xenium source table used for Table S3 and Figure 4e is regenerated from the A3 output by `scripts/review_A/xenium_source_fixed_from_A3.py`. Panels b, c and d of Figure 4 read the CPTAC-LUAD proteome tables, which are not redistributed here (see below); download them from the Proteomic Data Commons and point `SPP1_RAW` at the directory holding them, after which all six figures are reproduced:
 
 ```
 SPP1_RAW=/path/to/raw python3 make_figs_npjpo.py
@@ -73,7 +73,7 @@ Python 3.11; scanpy 1.11.5, anndata 0.12.19, harmonypy 2.1.0, pydeseq2 0.5.4, st
 
 If you use this code, please cite both the archived release and the paper. `CITATION.cff` holds the metadata in machine-readable form; the journal reference and its DOI are added there on acceptance.
 
-Xu H., Zhang H., Zhang L. *Analysis code for: A hypoxia-associated SPP1+ macrophage state distinguishes paired precursor and invasive lung adenocarcinoma lesions*, version 1.1.0 (2026). The Second Affiliated Hospital of Harbin Medical University, Harbin, China. https://github.com/xuhao1002/ggn-spp1-code. Archived at Zenodo: https://doi.org/10.5281/zenodo.23359094 (this DOI always resolves to the latest archived version). Version 1.1.0 is the version of record for the manuscript; later changes, including any made in response to peer review, are released as new versions.
+Xu H., Zhang H., Zhang L. *Analysis code for: A hypoxia-associated SPP1+ macrophage state distinguishes paired precursor and invasive lung adenocarcinoma lesions*, version 1.2.0 (2026). The Second Affiliated Hospital of Harbin Medical University, Harbin, China. https://github.com/xuhao1002/ggn-spp1-code. Archived at Zenodo: https://doi.org/10.5281/zenodo.23359094 (this DOI always resolves to the latest archived version). Version 1.2.0 is the version of record for the manuscript; later changes, including any made in response to peer review, are released as new versions.
 
 ## Licence
 
